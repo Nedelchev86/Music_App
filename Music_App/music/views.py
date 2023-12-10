@@ -18,8 +18,6 @@ def index(request):
     return render(request, "core/home-no-profile.html")
 
 
-
-
 def add_album(request):
     return render(request, "albums/add-album.html")
 
