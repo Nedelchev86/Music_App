@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load static %}
 
 
 {% block content %}
@@ -12,7 +13,7 @@
     <h1>All Albums</h1>
     <!-- First Card-Box in catalog -->
     <div class="card-box">
-        <img src="/static/images/BrandiCarlile.png" alt="Cover Image">
+        <img src="{% static 'images/BrandiCarlile.png' %}" alt="Cover Image">
         <div>
             <div class="text-center">
                 <p class="name">Name: In These Silent Days</p>

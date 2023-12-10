@@ -1,5 +1,6 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 
+from Music_App.music.forms import CreateUserForm
 from Music_App.music.models import Profile, Album
 
 
@@ -12,10 +13,9 @@ def get_profile():
 def index(request):
     profile = get_profile()
 
-    if profile:
-        return render(request, "core/home-with-profile.html")
-
-    return render(request, "core/home-no-profile.html")
+    if not profile:
+        return redirect("add profile")
+    return render(request, "core/home-with-profile.html")
 
 
 def add_album(request):
@@ -42,3 +42,16 @@ def delete_profile(request):
     return render(request, "profiles/profile-delete.html")
 
 
+def add_profile(request):
+    if request.method == "GET":
+        form = CreateUserForm()
+    else:
+        form = CreateUserForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect("index")
+    context = {
+        "form": form,
+    }
+
+    return render(request, "core/home-no-profile.html", context)
