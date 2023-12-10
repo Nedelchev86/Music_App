@@ -1,8 +1,23 @@
 from django.shortcuts import render
 
+from Music_App.music.models import Profile, Album
+
+
+def get_profile():
+    profile = Profile.objects.all()
+    if profile:
+        return profile[0]
+
 
 def index(request):
+    profile = get_profile()
+
+    if profile:
+        return render(request, "core/home-with-profile.html")
+
     return render(request, "core/home-no-profile.html")
+
+
 
 
 def add_album(request):
@@ -27,3 +42,5 @@ def details_profile(request):
 
 def delete_profile(request):
     return render(request, "profiles/profile-delete.html")
+
+
