@@ -2,28 +2,28 @@ from django.shortcuts import render
 
 
 def index(request):
-    pass
+    return render(request, "core/home-no-profile.html")
 
 
 def add_album(request):
-    pass
+    return render(request, "albums/add-album.html")
 
 
-def edit_album(request):
-    pass
+def edit_album(request, pk):
+    return render(request, "albums/edit-album.html")
 
 
-def delete_album(request):
-    pass
+def delete_album(request, pk):
+    return render(request, "albums/delete-album.html")
 
 
-def details_album(request):
-    pass
+def details_album(request, pk):
+    return render(request, "albums/album-details.html")
 
 
 def details_profile(request):
-    pass
+    return render(request, "profiles/profile-details.html")
 
 
 def delete_profile(request):
-    pass
+    return render(request, "profiles/profile-delete.html")

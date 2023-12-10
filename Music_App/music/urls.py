@@ -3,7 +3,7 @@ from django.urls import path, include
 from Music_App.music.views import index, add_album, details_album, edit_album, delete_album, details_profile, \
     delete_profile
 
-urlpatterns = [
+urlpatterns = (
     path("", index, name="index"),
     path("album/",include([
         path("add/", add_album, name="add album"),
@@ -15,4 +15,4 @@ urlpatterns = [
         path("details/", details_profile, name="details profile"),
         path("delete/", delete_profile, name="delete profile"),
     ]))
-]
+)
