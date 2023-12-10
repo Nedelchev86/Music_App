@@ -9,7 +9,24 @@ class CreateUserForm(forms.ModelForm):
         fields = "__all__"
 
 
-class CreateAlbumForm(forms.ModelForm):
+class AlbumBaseForm(forms.ModelForm):
     class Meta:
         model = Album
         fields = "__all__"
+
+        widgets = {
+            "album_name": forms.TextInput(attrs={"placeholder": "Album Name"}),
+            "artist": forms.TextInput(attrs={"placeholder": "Artist"}),
+            "description": forms.Textarea(attrs={"placeholder": "Description"}),
+            "image_url": forms.TextInput(attrs={"placeholder": "Image URL"}),
+            "price": forms.TextInput(attrs={"placeholder": "Price"}),
+
+        }
+
+
+class CreateAlbumForm(AlbumBaseForm):
+    pass
+
+
+class EditAlbumForm(AlbumBaseForm):
+    pass

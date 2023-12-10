@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 
-from Music_App.music.forms import CreateUserForm, CreateAlbumForm
+from Music_App.music.forms import CreateUserForm, CreateAlbumForm, EditAlbumForm
 from Music_App.music.models import Profile, Album
 
 
@@ -26,7 +26,11 @@ def index(request):
 def add_album(request):
     if request.method == "GET":
         form = CreateAlbumForm()
-
+    else:
+        form = CreateAlbumForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect("index")
     context = {
         "form": form,
     }
@@ -34,7 +38,20 @@ def add_album(request):
 
 
 def edit_album(request, pk):
-    return render(request, "albums/edit-album.html")
+    album = Album.objects.get(pk=pk)
+    if request.method == "GET":
+        form = EditAlbumForm(instance=album)
+    else:
+        form = EditAlbumForm(request.POST, instance=album)
+        if form.is_valid():
+            form.save()
+            return redirect('index')
+
+    context = {
+        "form": form,
+        "album": album,
+    }
+    return render(request, "albums/edit-album.html", context)
 
 
 def delete_album(request, pk):
@@ -42,7 +59,12 @@ def delete_album(request, pk):
 
 
 def details_album(request, pk):
-    return render(request, "albums/album-details.html")
+    album = Album.objects.get(pk=pk)
+
+    context = {
+        "album": album,
+    }
+    return render(request, "albums/album-details.html", context)
 
 
 def details_profile(request):
