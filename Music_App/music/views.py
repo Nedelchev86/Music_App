@@ -15,7 +15,12 @@ def index(request):
 
     if not profile:
         return redirect("add profile")
-    return render(request, "core/home-with-profile.html")
+    albums = Album.objects.all()
+
+    context = {
+        "albums": albums
+    }
+    return render(request, "core/home-with-profile.html", context)
 
 
 def add_album(request):

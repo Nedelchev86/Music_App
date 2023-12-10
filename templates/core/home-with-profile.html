@@ -5,10 +5,10 @@
 {% block content %}
 <!-- Catalog with Albums-->
 <section id="catalogPage">
-
+    {% if not albums %}
     <!--  If No albums in catalog -->
     <p>No Albums in Catalog!</p>
-
+{% else %}
     <!-- If albums in catalog -->
     <h1>All Albums</h1>
     <!-- First Card-Box in catalog -->
@@ -61,6 +61,6 @@
         </div>
     </div>
     <!-- End Third Card-Box in catalog -->
-
+    {% endif %}
 </section>
 {% endblock %}
