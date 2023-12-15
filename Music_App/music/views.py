@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 
-from Music_App.music.forms import CreateUserForm, CreateAlbumForm, EditAlbumForm
+from Music_App.music.forms import CreateUserForm, CreateAlbumForm, EditAlbumForm, DeleteAlbumForm
 from Music_App.music.models import Profile, Album
 
 
@@ -55,7 +55,22 @@ def edit_album(request, pk):
 
 
 def delete_album(request, pk):
-    return render(request, "albums/delete-album.html")
+    album = Album.objects.get(pk=pk)
+    if request.method == "GET":
+        form = DeleteAlbumForm(instance=album)
+        for field in form.fields:
+            form.fields[field].disabled = True
+    else:
+        # form = DeleteAlbumForm(request.POST, initial=album)
+        album.delete()
+        return redirect('index')
+
+    context = {
+        "form": form,
+        "album": album
+    }
+
+    return render(request, "albums/delete-album.html", context)
 
 
 def details_album(request, pk):
