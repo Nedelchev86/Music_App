@@ -83,10 +83,29 @@ def details_album(request, pk):
 
 
 def details_profile(request):
-    return render(request, "profiles/profile-details.html")
+    profile = Profile.objects.all()[0]
+    albums = Album.objects.all()
+    context = {
+        "profile": profile,
+        "albums": albums
+    }
+    return render(request, "profiles/profile-details.html", context)
 
 
 def delete_profile(request):
+    profile = Profile.objects.all()[0]
+    print(profile.pk)
+    if request.method == "GET":
+        profile_to_delete = profile
+    else:
+        profile.delete()
+        Album.objects.all().delete()
+        return redirect('index')
+
+    context = {
+        "profile_to_delete": profile,
+
+    }
     return render(request, "profiles/profile-delete.html")
 
 
