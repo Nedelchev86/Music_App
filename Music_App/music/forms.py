@@ -33,4 +33,14 @@ class EditAlbumForm(AlbumBaseForm):
 
 
 class DeleteAlbumForm(AlbumBaseForm):
-    pass
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for _, fields in self.fields.items():
+            fields.widget.attrs['readonly'] = 'readonly'
+            # fields.widget.attrs['disabled'] = 'disabled'
+    def save(self, commit=True):
+        if commit:
+            self.instance.delete()
+        return self.instance
+

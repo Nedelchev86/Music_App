@@ -57,13 +57,16 @@ def edit_album(request, pk):
 def delete_album(request, pk):
     album = Album.objects.get(pk=pk)
     if request.method == "GET":
+
         form = DeleteAlbumForm(instance=album)
-        for field in form.fields:
-            form.fields[field].disabled = True
+        # for field in form.fields:
+        #     form.fields[field].disabled = True
     else:
-        # form = DeleteAlbumForm(request.POST, initial=album)
-        album.delete()
-        return redirect('index')
+
+        form = DeleteAlbumForm(request.POST, instance=album)
+        if form.is_valid():
+            form.save()
+            return redirect('index')
 
     context = {
         "form": form,
